@@ -1,0 +1,792 @@
+/*
+ * Tailwind v4 entry: config lives here, with no tailwind.config.js or PostCSS plugin.
+ * Keep every @import in this top block. Web fonts load via <link> in src/routes/__root.tsx.
+ */
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+ * Varma 27 — Mission 2027 light-only design system
+ * Canvas: soft white / cool grey. Ink: deep navy.
+ * Orange = action & mission. Lime = completion & streak.
+ * Cyan + violet = categories & secondary highlights.
+ * ============================================================ */
+
+@theme inline {
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-deep: var(--primary-deep);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle: var(--subtle);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  --color-lime: var(--lime);
+  --color-lime-soft: var(--lime-soft);
+  --color-lime-ink: var(--lime-ink);
+  --color-cyan: var(--cyan);
+  --color-cyan-soft: var(--cyan-soft);
+  --color-cyan-ink: var(--cyan-ink);
+  --color-violet: var(--violet);
+  --color-violet-soft: var(--violet-soft);
+  --color-violet-ink: var(--violet-ink);
+  --color-ink: var(--ink);
+
+  --color-chart-1: var(--primary);
+  --color-chart-2: var(--cyan);
+  --color-chart-3: var(--violet);
+  --color-chart-4: var(--lime);
+  --color-chart-5: var(--primary-deep);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --shadow-panel: var(--elev-panel);
+  --shadow-lift: var(--elev-lift);
+  --shadow-glow: var(--elev-glow);
+  --shadow-glow-lime: var(--elev-glow-lime);
+  --shadow-hover: var(--elev-hover);
+
+  --ease-vx: var(--ease-out);
+  --ease-vx-spring: var(--ease-spring);
+}
+
+:root {
+  --radius: 0.875rem;
+
+  --background: oklch(0.975 0.005 258.3); /* #F5F7FA */
+  --surface: oklch(0.965 0.007 247.9); /* #F0F4F8 */
+  --foreground: oklch(0.253 0.045 263.3); /* #172238 */
+  --ink: oklch(0.253 0.045 263.3);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.253 0.045 263.3);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.253 0.045 263.3);
+
+  --primary: oklch(0.711 0.19 42.3); /* #FF702E */
+  --primary-deep: oklch(0.655 0.208 36.3); /* #F4511E */
+  --primary-soft: oklch(0.96 0.035 50);
+  --primary-foreground: oklch(1 0 0);
+
+  --secondary: oklch(0.965 0.007 247.9);
+  --secondary-foreground: oklch(0.253 0.045 263.3);
+  --muted: oklch(0.955 0.008 250);
+  --muted-foreground: oklch(0.554 0.034 256.1); /* #667487 */
+  --subtle: oklch(0.714 0.026 254); /* #98A4B3 */
+  --accent: oklch(0.955 0.008 250);
+  --accent-foreground: oklch(0.253 0.045 263.3);
+
+  --lime: oklch(0.93 0.217 124.7); /* #C8FF38 */
+  --lime-soft: oklch(0.97 0.08 124);
+  --lime-ink: oklch(0.5 0.14 132);
+  --cyan: oklch(0.762 0.126 205.4); /* #20C8D8 */
+  --cyan-soft: oklch(0.96 0.03 205);
+  --cyan-ink: oklch(0.5 0.09 210);
+  --violet: oklch(0.643 0.198 283.2); /* #8175FF */
+  --violet-soft: oklch(0.96 0.03 283);
+  --violet-ink: oklch(0.5 0.19 283);
+
+  --destructive: oklch(0.6 0.21 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.929 0.011 256.7);
+  --input: oklch(0.91 0.013 256.7);
+  --ring: oklch(0.711 0.19 42.3);
+
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.253 0.045 263.3);
+  --sidebar-primary: oklch(0.711 0.19 42.3);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.96 0.035 50);
+  --sidebar-accent-foreground: oklch(0.253 0.045 263.3);
+  --sidebar-border: oklch(0.929 0.011 256.7);
+  --sidebar-ring: oklch(0.711 0.19 42.3);
+
+  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-deep) 100%);
+  --gradient-energy: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    var(--primary-deep) 70%,
+    var(--lime) 100%
+  );
+  --gradient-hero:
+    radial-gradient(
+      1200px 500px at 85% -10%,
+      color-mix(in oklab, var(--primary) 14%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at -10% 120%,
+      color-mix(in oklab, var(--cyan) 14%, transparent),
+      transparent 60%
+    ),
+    linear-gradient(180deg, var(--card) 0%, var(--surface) 100%);
+  --gradient-canvas:
+    radial-gradient(
+      900px 600px at 100% 0%,
+      color-mix(in oklab, var(--primary) 6%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 700px at 0% 100%,
+      color-mix(in oklab, var(--violet) 6%, transparent),
+      transparent 60%
+    );
+
+  --elev-panel:
+    0 1px 0 0 color-mix(in oklab, var(--card) 80%, transparent) inset,
+    0 1px 2px color-mix(in oklab, var(--ink) 5%, transparent),
+    0 8px 24px -12px color-mix(in oklab, var(--ink) 14%, transparent);
+  --elev-lift:
+    0 2px 4px color-mix(in oklab, var(--ink) 5%, transparent),
+    0 24px 48px -20px color-mix(in oklab, var(--ink) 22%, transparent);
+  --elev-glow: 0 10px 30px -10px color-mix(in oklab, var(--primary) 55%, transparent);
+  --elev-glow-lime: 0 8px 24px -8px color-mix(in oklab, var(--lime-ink) 45%, transparent);
+  --elev-hover:
+    0 2px 4px color-mix(in oklab, var(--ink) 5%, transparent),
+    0 22px 44px -22px color-mix(in oklab, var(--ink) 26%, transparent);
+  --glow-orange: color-mix(in oklab, var(--primary) 38%, transparent);
+  --glow-cyan: color-mix(in oklab, var(--cyan) 42%, transparent);
+  --glow-lime: color-mix(in oklab, var(--lime-ink) 40%, transparent);
+  --glow-violet: color-mix(in oklab, var(--violet) 38%, transparent);
+
+  /* Focus */
+  --focus-ring: 0 0 0 2px var(--card), 0 0 0 4px var(--primary);
+
+  /* Spacing rhythm */
+  --space-section: 2rem;
+  --space-card: 1.25rem;
+  --space-card-lg: 1.75rem;
+
+  /* Motion — one timing language for the whole product */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-press: 160ms;
+  --dur-hover: 220ms;
+  --dur-card: 280ms;
+  --dur-drawer: 320ms;
+  --dur-enter: 460ms;
+  --dur-progress: 900ms;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    background-color: var(--color-background);
+    background-image: var(--gradient-canvas);
+    background-attachment: fixed;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------- Surfaces ---------- */
+@utility panel {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elev-panel);
+}
+
+@utility panel-glass {
+  background: linear-gradient(
+    160deg,
+    color-mix(in oklab, var(--card) 88%, transparent),
+    color-mix(in oklab, var(--card) 62%, transparent)
+  );
+  backdrop-filter: blur(14px) saturate(1.3);
+  border: 1px solid color-mix(in oklab, var(--card) 70%, var(--border));
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elev-panel);
+}
+
+@utility hud-grid {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--ink) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--ink) 5%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+@utility hud-corners {
+  position: relative;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: var(--color-primary);
+    pointer-events: none;
+  }
+  &::before {
+    top: 10px;
+    left: 10px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+  }
+  &::after {
+    bottom: 10px;
+    right: 10px;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+  }
+}
+
+@utility hud-label {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility bg-gradient-primary {
+  background-image: var(--gradient-primary);
+}
+@utility bg-gradient-energy {
+  background-image: var(--gradient-energy);
+}
+@utility bg-gradient-hero {
+  background-image: var(--gradient-hero);
+}
+
+@utility lift {
+  transition:
+    transform var(--dur-card) var(--ease-out),
+    box-shadow var(--dur-card) var(--ease-out),
+    border-color var(--dur-hover) ease;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        var(--elev-hover),
+        0 14px 34px -18px var(--vx-glow, var(--glow-orange));
+    }
+  }
+}
+
+/* Interactive surface: lift + ambient glow + border shift + arrow nudge + press. */
+@utility interactive {
+  --vx-glow: var(--glow-orange);
+  --vx-border: color-mix(in oklab, var(--primary) 40%, var(--border));
+  cursor: pointer;
+  transition:
+    transform var(--dur-card) var(--ease-out),
+    box-shadow var(--dur-card) var(--ease-out),
+    border-color var(--dur-hover) ease,
+    background-color var(--dur-hover) ease;
+  & :where(.lucide-arrow-right, .lucide-arrow-up-right, .lucide-chevron-right) {
+    transition:
+      transform var(--dur-hover) var(--ease-out),
+      color var(--dur-hover) ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: perspective(1000px) translateY(-3px) rotateX(var(--vx-tilt, 0deg));
+      border-color: var(--vx-border);
+      box-shadow:
+        var(--elev-hover),
+        0 14px 34px -18px var(--vx-glow);
+    }
+    &:hover :where(.lucide-arrow-right, .lucide-chevron-right) {
+      transform: translateX(3px);
+      color: var(--color-primary);
+    }
+    &:hover :where(.lucide-arrow-up-right) {
+      transform: translate(2px, -2px);
+    }
+  }
+  &:active {
+    transform: translateY(0) scale(0.985);
+    transition-duration: var(--dur-press);
+  }
+}
+
+/* Adds a gentle 3D perspective to an interactive card on precise pointers only. */
+@utility tilt {
+  --vx-tilt: 1.5deg;
+}
+
+@utility glow-cyan {
+  --vx-glow: var(--glow-cyan);
+  --vx-border: color-mix(in oklab, var(--cyan) 55%, var(--border));
+}
+@utility glow-lime {
+  --vx-glow: var(--glow-lime);
+  --vx-border: color-mix(in oklab, var(--lime-ink) 45%, var(--border));
+}
+@utility glow-violet {
+  --vx-glow: var(--glow-violet);
+  --vx-border: color-mix(in oklab, var(--violet) 45%, var(--border));
+}
+
+@utility block-3d {
+  box-shadow:
+    0 1px 0 color-mix(in oklab, var(--card) 90%, transparent) inset,
+    0 -3px 0 color-mix(in oklab, var(--ink) 8%, transparent) inset,
+    0 6px 14px -8px color-mix(in oklab, var(--ink) 30%, transparent);
+}
+
+@utility block-3d-lime {
+  box-shadow:
+    0 1px 0 color-mix(in oklab, var(--card) 70%, transparent) inset,
+    0 -3px 0 color-mix(in oklab, var(--lime-ink) 30%, transparent) inset,
+    0 10px 22px -10px var(--glow-lime);
+}
+
+/* Section entrance; stagger with style={{ "--i": n }}. */
+@utility reveal {
+  animation: vx-enter var(--dur-enter) var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+@utility press {
+  transition: transform var(--dur-press) var(--ease-out);
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ---------- Motion ---------- */
+@keyframes vx-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@keyframes vx-emblem-in {
+  0% {
+    opacity: 0;
+    transform: perspective(700px) rotateY(-50deg) rotateZ(-10deg) scale(0.55);
+  }
+  65% {
+    opacity: 1;
+    transform: perspective(700px) rotateY(6deg) rotateZ(1deg) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(700px) rotateY(0) rotateZ(0) scale(1);
+  }
+}
+@keyframes vx-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes vx-letter {
+  from {
+    opacity: 0;
+    transform: translateY(70%) rotateX(-50deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+@keyframes vx-line {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes vx-travel {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes vx-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@keyframes vx-intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@keyframes vx-intro-content-out {
+  to {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+@keyframes vx-ambient {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes vx-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes vx-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes vx-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes vx-pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 45%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+@keyframes vx-scan {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes vx-grow-x {
+  from {
+    width: 0;
+  }
+}
+@keyframes vx-ring-in {
+  from {
+    stroke-dashoffset: var(--vx-c);
+  }
+}
+@keyframes vx-rail {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes vx-sweep {
+  from {
+    transform: translateX(-100%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+@keyframes vx-complete {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--glow-lime);
+  }
+  35% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+@keyframes vx-burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateY(calc(var(--d) * -1)) scale(0.4);
+  }
+}
+@keyframes vx-confetti {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0);
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--x), var(--y), 0) rotate(var(--r));
+  }
+}
+@keyframes vx-collapse-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+}
+@keyframes vx-collapse-up {
+  from {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+@keyframes vx-overlay-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes vx-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.94);
+  }
+}
+
+@utility animate-emblem {
+  animation: vx-emblem-in 950ms var(--ease-out) both;
+}
+@utility animate-rise {
+  animation: vx-rise 560ms var(--ease-out) both;
+}
+@utility animate-letter {
+  animation: vx-letter 620ms var(--ease-out) both;
+}
+@utility animate-line {
+  transform-origin: left;
+  animation: vx-line 1000ms var(--ease-in-out) both;
+}
+@utility animate-travel {
+  animation: vx-travel 1000ms var(--ease-in-out) both;
+}
+@utility animate-fade-out {
+  animation: vx-fade-out 260ms ease forwards;
+}
+@utility animate-intro-out {
+  animation: vx-intro-out 560ms ease forwards;
+}
+@utility animate-intro-content-out {
+  animation: vx-intro-content-out 420ms var(--ease-out) forwards;
+}
+@utility animate-ambient {
+  animation: vx-ambient 1200ms var(--ease-out) both;
+}
+@utility animate-draw {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: vx-draw 500ms 150ms ease-out forwards;
+}
+@utility animate-pop {
+  animation: vx-pop 500ms var(--ease-out) both;
+}
+@utility animate-float {
+  animation: vx-float 6s ease-in-out infinite;
+}
+@utility animate-pulse-ring {
+  animation: vx-pulse-ring 1.8s ease-out infinite;
+}
+@utility animate-scan {
+  animation: vx-scan 2.4s linear infinite;
+}
+@utility animate-grow-x {
+  animation: vx-grow-x var(--dur-progress) var(--ease-out) backwards;
+}
+@utility animate-rail {
+  transform-origin: top;
+  animation: vx-rail 1200ms var(--ease-in-out) backwards;
+}
+@utility animate-sweep {
+  animation: vx-sweep 700ms var(--ease-out) forwards;
+}
+@utility animate-complete {
+  animation: vx-complete 900ms var(--ease-out) 1;
+}
+@utility animate-collapse-down {
+  overflow: hidden;
+  animation: vx-collapse-down var(--dur-card) var(--ease-out);
+}
+@utility animate-collapse-up {
+  overflow: hidden;
+  animation: vx-collapse-up 220ms var(--ease-out);
+}
+@utility animate-overlay-in {
+  animation: vx-overlay-in 260ms ease both;
+}
+@utility animate-card-in {
+  animation: vx-card-in 520ms var(--ease-spring) both;
+}
+
+/* Burst & confetti particles — one-shot, a handful of nodes. */
+.vx-burst-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  animation: vx-burst 700ms var(--ease-out) forwards;
+  pointer-events: none;
+}
+.vx-confetti {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  width: 8px;
+  height: 12px;
+  border-radius: 2px;
+  animation: vx-confetti 1500ms var(--ease-out) forwards;
+  pointer-events: none;
+}
+
+/* Page entrance: every route's top-level blocks rise in with a short stagger. */
+.vx-page > * > * {
+  animation: vx-enter var(--dur-enter) var(--ease-out) backwards;
+}
+.vx-page > * > *:nth-child(2) {
+  animation-delay: 60ms;
+}
+.vx-page > * > *:nth-child(3) {
+  animation-delay: 120ms;
+}
+.vx-page > * > *:nth-child(4) {
+  animation-delay: 180ms;
+}
+.vx-page > * > *:nth-child(5) {
+  animation-delay: 240ms;
+}
+.vx-page > * > *:nth-child(n + 6) {
+  animation-delay: 300ms;
+}
+
+/* Launch handoff: the app waits behind the intro, then glides in as it lifts. */
+.vx-app-main,
+.vx-app-aside {
+  transition:
+    opacity 650ms var(--ease-out),
+    transform 750ms var(--ease-out);
+}
+.vx-intro-playing .vx-app-main {
+  opacity: 0;
+  transform: translateY(22px) scale(0.985);
+}
+.vx-intro-playing .vx-app-aside {
+  opacity: 0;
+  transform: translateX(-14px);
+}
+.vx-intro-playing .vx-page > * > * {
+  animation-play-state: paused;
+}
+
+.vx-intro-seen .vx-intro {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+  .vx-confetti,
+  .vx-burst-dot {
+    display: none;
+  }
+}
