@@ -39,14 +39,23 @@ export function toCloudUser(u: User): CloudUser {
   };
 }
 
-/** Recursively strips `undefined` values because Firestore rejects explicit undefined properties. */
-function stripUndefined<T>(value: T): T {
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  if (value === null || typeof value !== "object") return false;
+  const proto = Object.getPrototypeOf(value);
+  return proto === Object.prototype || proto === null;
+}
+
+/**
+ * Recursively strips `undefined` properties from plain objects & arrays because Firestore rejects
+ * explicit `undefined` values, while leaving class instances (like `serverTimestamp()`) untouched.
+ */
+export function stripUndefined<T>(value: T): T {
   if (Array.isArray(value)) {
     return value.map((item) => stripUndefined(item)) as unknown as T;
   }
-  if (value !== null && typeof value === "object") {
+  if (isPlainObject(value)) {
     const out: Record<string, unknown> = {};
-    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+    for (const [k, v] of Object.entries(value)) {
       if (v !== undefined) out[k] = stripUndefined(v);
     }
     return out as T;
@@ -59,9 +68,10 @@ export function describeFirebaseError(error: unknown): string {
     typeof error === "object" && error !== null && "code" in error
       ? String((error as { code?: unknown }).code)
       : "";
+  const host = typeof window !== "undefined" ? window.location.hostname : "this domain";
   switch (code) {
     case "permission-denied":
-      return "Firestore permission denied. Check your sign-in status and security rules.";
+      return "Firestore permission denied. Check your sign-in status and Firestore security rules.";
     case "unavailable":
       return "Cloud sync is temporarily offline. Changes are cached locally and will retry.";
     case "auth/popup-closed-by-user":
@@ -71,7 +81,7 @@ export function describeFirebaseError(error: unknown): string {
     case "auth/network-request-failed":
       return "Network error while contacting Firebase. Check your connection.";
     case "auth/unauthorized-domain":
-      return "This domain is not authorized in Firebase Authentication settings.";
+      return `Add "${host}" under Firebase Console → Authentication → Settings → Authorized domains.`;
     default:
       return error instanceof Error ? error.message : "Could not sync with Firebase.";
   }
@@ -155,11 +165,11 @@ export async function fetchCloudMissionState(uid: string): Promise<MissionState 
 }
 
 export async function saveCloudMissionState(uid: string, state: MissionState): Promise<void> {
-  const payload = stripUndefined({
-    ...sanitizeState(state),
+  const cleanState = stripUndefined(sanitizeState(state));
+  await setDoc(missionDocRef(uid), {
+    ...cleanState,
     updatedAt: serverTimestamp(),
   });
-  await setDoc(missionDocRef(uid), payload);
 }
 
 export function subscribeCloudMissionState(

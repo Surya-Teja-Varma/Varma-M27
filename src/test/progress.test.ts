@@ -1,8 +1,10 @@
+import { serverTimestamp } from "firebase/firestore";
 import { describe, expect, it } from "vitest";
 
 import { AUDIT_ITEMS } from "@/data/audit";
 import { ALL_WEEKS, getWeek } from "@/data/roadmap";
 import type { Week } from "@/data/types";
+import { stripUndefined } from "@/lib/firebase-service";
 import {
   achievementProgress,
   canCompleteWeek,
@@ -292,5 +294,22 @@ describe("Asia/Kolkata timezone boundaries, state sanitization, and URL validati
     expect(safeExternalUrl("data:text/html,hi")).toBeNull();
     expect(safeExternalUrl("not a url")).toBeNull();
     expect(safeExternalUrl("   ")).toBeNull();
+  });
+
+  it("strips undefined keys while preserving Firestore FieldValue sentinels", () => {
+    const sentinel = serverTimestamp();
+    const cleaned = stripUndefined({
+      ok: true,
+      dropMe: undefined,
+      nested: { keep: "yes", drop: undefined },
+      updatedAt: sentinel,
+    });
+    expect(cleaned).toEqual({
+      ok: true,
+      nested: { keep: "yes" },
+      updatedAt: sentinel,
+    });
+    expect("dropMe" in cleaned).toBe(false);
+    expect(cleaned.updatedAt).toBe(sentinel);
   });
 });
